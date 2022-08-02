@@ -1,6 +1,6 @@
 import { apiConfig } from './apiConfig';
 
-export class Api {
+class Api {
   constructor(options) {
     this._url = options.url;
     this._headers = options.headers;
@@ -96,4 +96,4 @@ export class Api {
 }
 
 const api = new Api(apiConfig);
-export default api;
+export { Api, api };
