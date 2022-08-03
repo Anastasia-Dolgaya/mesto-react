@@ -1,18 +1,18 @@
-function Input(props) {
+function Input({ type, id, inputname, value, placeholder, minLength, maxLength }) {
   return (
     <label className="popup__field">
       <input
-        type={props.type}
-        id={props.id}
-        className={`popup__input popup__input_type_${props.inputname}`}
-        name={props.inputname}
-        value={props.value}
-        placeholder={props.placeholder}
-        minLength={props.minLength}
-        maxLength={props.maxLength}
+        type={type}
+        id={id}
+        className={`popup__input popup__input_type_${inputname}`}
+        name={inputname}
+        value={value}
+        placeholder={placeholder}
+        minLength={minLength}
+        maxLength={maxLength}
         required
       />
-      <span className={`popup__input-error ${props.id}-error`}></span>
+      <span className={`popup__input-error ${id}-error`}></span>
     </label>
   );
 }

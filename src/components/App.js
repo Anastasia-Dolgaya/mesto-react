@@ -123,6 +123,7 @@ function App() {
         isSelected={selectedCard.selected}
         onClose={closeAllPopups}
         link={selectedCard.card.link}
+        title={selectedCard.card.name}
       />
     </>
   );

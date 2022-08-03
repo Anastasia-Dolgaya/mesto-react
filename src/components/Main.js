@@ -1,13 +1,14 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { api } from '../utils/Api';
 import Card from './Card';
-function Main(props) {
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setUserDescription] = React.useState();
-  const [userAvatar, setUserAvatar] = React.useState();
-  const [cards, setCards] = React.useState([]);
 
-  React.useEffect(() => {
+function Main({ onAddPlace, onCardClick, onEditAvatar, onEditProfile }) {
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
     api
       .fetchUserData()
       .then((res) => {
@@ -18,7 +19,7 @@ function Main(props) {
       .catch((err) => console.log(`Ошибка: ${err}`));
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     api
       .fetchInitialCards()
       .then((res) => {
@@ -33,7 +34,7 @@ function Main(props) {
       name={card.name}
       link={card.link}
       likesNumber={card.likes.length}
-      onCardClick={props.onCardClick}
+      onCardClick={onCardClick}
       card={card}
     />
   ));
@@ -47,7 +48,7 @@ function Main(props) {
             <button
               type="button"
               className="profile__avatar-button"
-              onClick={props.onEditAvatar}
+              onClick={onEditAvatar}
             ></button>
           </div>
           <div className="profile__info">
@@ -56,13 +57,13 @@ function Main(props) {
               <button
                 type="button"
                 className="profile__edit-button"
-                onClick={props.onEditProfile}
+                onClick={onEditProfile}
               ></button>
             </div>
             <p className="profile__job">{userDescription}</p>
           </div>
         </div>
-        <button type="button" className="profile__add-button" onClick={props.onAddPlace}></button>
+        <button type="button" className="profile__add-button" onClick={onAddPlace}></button>
       </section>
 
       <section className="elements">{renderCards}</section>
