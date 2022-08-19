@@ -1,6 +1,9 @@
-function ImagePopup({ isSelected, onClose, link, title }) {
+function ImagePopup({ isSelected, onClose, link, title, onOverlayClick }) {
   return (
-    <div className={`popup popup_content_image ${isSelected ? 'popup_opened' : ''}`}>
+    <div
+      className={`popup popup_content_image ${isSelected ? 'popup_opened' : ''}`}
+      onClick={onOverlayClick}
+    >
       <div className="popup__box">
         <button type="button" className="popup__close-button" onClick={onClose}></button>
         <figure className="popup__image-box">
