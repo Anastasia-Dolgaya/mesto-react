@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { api } from 'utils/Api';
+import { api } from 'utils/api';
 import Footer from './Footer';
 import Header from './Header';
 import ImagePopup from './ImagePopup';
 import Main from './Main';
+import Popup from './Popup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
@@ -24,7 +25,8 @@ function App() {
   });
   const [currentUser, setCurrentUser] = useState({ name: '', about: '' });
   const [cards, setCards] = useState([]);
-  const [buttonContent, setButtonContent] = useState('Сохранить');
+  const saveBtnContent = 'Сохранить';
+  const [buttonContent, setButtonContent] = useState(saveBtnContent);
   const [addButtonContent, setAddButtonContent] = useState('Создать');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -51,22 +53,18 @@ function App() {
   // open popups
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
-    document.addEventListener('keydown', handleEscClose);
   }
 
   function handleAddPlaceClick() {
     setAddPlacePopupOpen(true);
-    document.addEventListener('keydown', handleEscClose);
   }
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
-    document.addEventListener('keydown', handleEscClose);
   }
 
   function handleConfirmationPopupClick(card) {
     setConfirmationPopupOpen({ open: true, card: card });
-    document.addEventListener('keydown', handleEscClose);
   }
 
   // close popups
@@ -76,19 +74,6 @@ function App() {
     setEditAvatarPopupOpen(false);
     setSelectedCard({ selected: false, card: {} });
     setConfirmationPopupOpen({ open: false, card: {} });
-    document.removeEventListener('keydown', handleEscClose);
-  }
-
-  function handleEscClose(e) {
-    if (e.key === 'Escape') {
-      closeAllPopups();
-    }
-  }
-
-  function handleOverlayClick(e) {
-    if (e.currentTarget === e.target) {
-      closeAllPopups();
-    }
   }
 
   // update profile
@@ -98,12 +83,12 @@ function App() {
       .updateUserData(data)
       .then((res) => {
         setCurrentUser(res);
+        closeAllPopups();
       })
       .catch((err) => console.log(`Ошибка: ${err}`))
       .finally(() => {
-        setButtonContent('Сохранить');
+        setButtonContent(saveBtnContent);
       });
-    closeAllPopups();
   }
 
   function handleUpdateAvatar(data) {
@@ -112,12 +97,12 @@ function App() {
       .updateUserAvatar(data)
       .then((res) => {
         setCurrentUser(res);
+        closeAllPopups();
       })
       .catch((err) => console.log(`Ошибка: ${err}`))
       .finally(() => {
-        setButtonContent('Сохранить');
+        setButtonContent(saveBtnContent);
       });
-    closeAllPopups();
   }
 
   // add new card and card functions
@@ -127,12 +112,12 @@ function App() {
       .addNewCard(data)
       .then((res) => {
         setCards([res, ...cards]);
+        closeAllPopups();
       })
       .catch((err) => console.log(`Ошибка: ${err}`))
       .finally(() => {
         setAddButtonContent('Создать');
       });
-    closeAllPopups();
   }
 
   function handleCardClick(card) {
@@ -154,9 +139,9 @@ function App() {
       .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
+        closeAllPopups();
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
-    closeAllPopups();
   }
 
   return (
@@ -181,7 +166,6 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           buttonContent={buttonContent}
-          onOverlayClick={handleOverlayClick}
         />
       )}
 
@@ -191,17 +175,15 @@ function App() {
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
           buttonContent={addButtonContent}
-          onOverlayClick={handleOverlayClick}
         />
       )}
 
-      {isConfirmationPopupOpen && (
+      {isConfirmationPopupOpen.open && (
         <ConfirmationPopup
           isOpen={isConfirmationPopupOpen.open}
           onClose={closeAllPopups}
           onConfirmation={handleCardDelete}
           card={isConfirmationPopupOpen.card}
-          onOverlayClick={handleOverlayClick}
         />
       )}
 
@@ -211,17 +193,14 @@ function App() {
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
           buttonContent={buttonContent}
-          onOverlayClick={handleOverlayClick}
         />
       )}
 
-      <ImagePopup
-        isSelected={selectedCard.selected}
-        onClose={closeAllPopups}
-        link={selectedCard.card.link}
-        title={selectedCard.card.name}
-        onOverlayClick={handleOverlayClick}
-      />
+      {selectedCard.selected && (
+        <Popup isOpen={selectedCard.selected} onClose={closeAllPopups} type="image" name="image">
+          <ImagePopup link={selectedCard.card.link} title={selectedCard.card.name} />
+        </Popup>
+      )}
     </CurrentUserContext.Provider>
   );
 }

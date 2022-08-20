@@ -6,18 +6,15 @@ class Api {
     this._headers = options.headers;
   }
 
-  _response(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(res.status);
+  _handleResponse(res) {
+    return res.ok ? res.json() : Promise.reject(res.status);
   }
 
   fetchUserData() {
-    return fetch('https://nomoreparties.co/v1/cohort-45/users/me', {
+    return fetch(`${this._url}/users/me`, {
       headers: this._headers,
     }).then((res) => {
-      return this._response(res);
+      return this._handleResponse(res);
     });
   }
 
@@ -25,7 +22,7 @@ class Api {
     return fetch(`${this._url}/cards`, {
       headers: this._headers,
     }).then((res) => {
-      return this._response(res);
+      return this._handleResponse(res);
     });
   }
 
@@ -38,7 +35,7 @@ class Api {
         about: data.about,
       }),
     }).then((res) => {
-      return this._response(res);
+      return this._handleResponse(res);
     });
   }
 
@@ -50,7 +47,7 @@ class Api {
         avatar: data.avatar,
       }),
     }).then((res) => {
-      return this._response(res);
+      return this._handleResponse(res);
     });
   }
 
@@ -63,7 +60,7 @@ class Api {
         link: data.link,
       }),
     }).then((res) => {
-      return this._response(res);
+      return this._handleResponse(res);
     });
   }
 
@@ -72,7 +69,7 @@ class Api {
       method: 'DELETE',
       headers: this._headers,
     }).then((res) => {
-      return this._response(res);
+      return this._handleResponse(res);
     });
   }
 
@@ -81,7 +78,7 @@ class Api {
       method: 'GET',
       headers: this._headers,
     }).then((res) => {
-      return this._response(res);
+      return this._handleResponse(res);
     });
   }
 
@@ -90,7 +87,7 @@ class Api {
       method: isLiked ? 'DELETE' : 'PUT',
       headers: this._headers,
     }).then((res) => {
-      return this._response(res);
+      return this._handleResponse(res);
     });
   }
 }
