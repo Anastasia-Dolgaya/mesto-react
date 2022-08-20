@@ -18,7 +18,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --fix",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build/static"
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
