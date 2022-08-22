@@ -1,5 +1,5 @@
 import { apiConfig } from './apiConfig';
-
+// название файла было исправлено, но почему-то на гитхабе название не изменилось. Проект запускался как локально, так и на на GH-Pages
 class Api {
   constructor(options) {
     this._url = options.url;
