@@ -1,4 +1,3 @@
-import Popup from './Popup';
 import PopupWithForm from './PopupWithForm';
 import Input from './Input';
 import { validateCard } from 'utils/utils';
@@ -14,40 +13,40 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, buttonContent }) {
     titleField.value === '' || linkField.value === '' || form.noErrors === false;
 
   return (
-    <Popup isOpen={isOpen} onClose={onClose} type="form" name="card">
-      <PopupWithForm
-        name="card"
-        title="Новое место"
-        buttonContent={buttonContent}
-        onSubmit={form.handleSubmit}
-        hasErrors={isButtonDisabled}
-      >
-        <Input
-          type="text"
-          id="card-name-input"
-          inputname="name"
-          value={titleField.value}
-          placeholder="Название"
-          onChange={titleField.handleChange}
-          onBlur={titleField.handleBlur}
-          onFocus={titleField.handleFocus}
-          hasErrors={titleField.error}
-          errorMessage={titleField.error}
-        />
-        <Input
-          type="url"
-          id="link-input"
-          inputname="link"
-          value={linkField.value}
-          placeholder="Ссылка на картинку"
-          onChange={linkField.handleChange}
-          onBlur={linkField.handleBlur}
-          onFocus={linkField.handleFocus}
-          hasErrors={linkField.error}
-          errorMessage={linkField.error}
-        />
-      </PopupWithForm>
-    </Popup>
+    <PopupWithForm
+      name="card"
+      title="Новое место"
+      buttonContent={buttonContent}
+      onSubmit={form.handleSubmit}
+      hasErrors={isButtonDisabled}
+      isOpen={isOpen}
+      onClose={onClose}
+    >
+      <Input
+        type="text"
+        id="card-name-input"
+        inputname="name"
+        value={titleField.value}
+        placeholder="Название"
+        onChange={titleField.handleChange}
+        onBlur={titleField.handleBlur}
+        onFocus={titleField.handleFocus}
+        hasErrors={titleField.error}
+        errorMessage={titleField.error}
+      />
+      <Input
+        type="url"
+        id="link-input"
+        inputname="link"
+        value={linkField.value}
+        placeholder="Ссылка на картинку"
+        onChange={linkField.handleChange}
+        onBlur={linkField.handleBlur}
+        onFocus={linkField.handleFocus}
+        hasErrors={linkField.error}
+        errorMessage={linkField.error}
+      />
+    </PopupWithForm>
   );
 }
 

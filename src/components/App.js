@@ -4,7 +4,6 @@ import Footer from './Footer';
 import Header from './Header';
 import ImagePopup from './ImagePopup';
 import Main from './Main';
-import Popup from './Popup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
@@ -197,9 +196,12 @@ function App() {
       )}
 
       {selectedCard.selected && (
-        <Popup isOpen={selectedCard.selected} onClose={closeAllPopups} type="image" name="image">
-          <ImagePopup link={selectedCard.card.link} title={selectedCard.card.name} />
-        </Popup>
+        <ImagePopup
+          link={selectedCard.card.link}
+          title={selectedCard.card.name}
+          isOpen={selectedCard.selected}
+          onClose={closeAllPopups}
+        />
       )}
     </CurrentUserContext.Provider>
   );

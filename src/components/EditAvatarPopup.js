@@ -1,4 +1,3 @@
-import Popup from './Popup';
 import PopupWithForm from './PopupWithForm';
 import Input from './Input';
 import { useRef } from 'react';
@@ -16,22 +15,22 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, buttonContent }) {
   }
 
   return (
-    <Popup isOpen={isOpen} onClose={onClose} type="form" name="avatar">
-      <PopupWithForm
-        name="avatar"
-        title="Обновить аватар"
-        buttonContent={buttonContent}
-        onSubmit={handleSubmit}
-      >
-        <Input
-          type="url"
-          id="avatar-input"
-          inputname="avatar"
-          placeholder="Ссылка на картинку"
-          inputRef={avatarInput}
-        />
-      </PopupWithForm>
-    </Popup>
+    <PopupWithForm
+      name="avatar"
+      title="Обновить аватар"
+      buttonContent={buttonContent}
+      onSubmit={handleSubmit}
+      isOpen={isOpen}
+      onClose={onClose}
+    >
+      <Input
+        type="url"
+        id="avatar-input"
+        inputname="avatar"
+        placeholder="Ссылка на картинку"
+        inputRef={avatarInput}
+      />
+    </PopupWithForm>
   );
 }
 
